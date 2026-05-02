@@ -89,6 +89,7 @@ public class ModifyManaPower extends Power {
         if (!(holder.getEntity() instanceof LivingEntity livingEntity)) {
             return;
         }
+        System.out.println("1");
 
         this.getAttributeInstance(livingEntity).ifPresent(instance ->
             this.modifiers.stream()
@@ -102,6 +103,7 @@ public class ModifyManaPower extends Power {
         if (!(holder.getEntity() instanceof LivingEntity livingEntity)) {
             return;
         }
+        System.out.println("2");
 
         this.getAttributeInstance(livingEntity).ifPresent(instance ->
             this.modifiers.stream()
