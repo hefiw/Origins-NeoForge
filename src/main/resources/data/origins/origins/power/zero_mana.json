@@ -1,0 +1,9 @@
+{
+   "type": "origins:modify_mana",
+   "attribute": "irons_spellbooks:max_mana",
+   "modifier": {
+     "id": "origin_mana_bonus",
+     "amount": -100.0,
+     "operation": "add_value"
+   }
+ }

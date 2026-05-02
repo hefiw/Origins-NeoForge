@@ -6,7 +6,8 @@
     "origins:nine_lives",
     "origins:weak_arms",
     "origins:scare_creepers",
-    "origins:cat_vision"
+    "origins:cat_vision",
+    "origins:zero_mana"
   ],
   "icon": {
     "id": "minecraft:orange_wool"

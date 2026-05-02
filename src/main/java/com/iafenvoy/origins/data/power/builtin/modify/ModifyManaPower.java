@@ -37,7 +37,7 @@ public class ModifyManaPower extends Power {
     public static final MapCodec<ModifyManaPower> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             BaseSettings.CODEC.forGetter(Power::getSettings),
             Attribute.CODEC.fieldOf("attribute").forGetter(ModifyManaPower::getAttribute),
-            CombinedCodecs.ATTRIBUTE_MODIFIER.listOf().fieldOf("modifier").forGetter(ModifyManaPower::getModifiers)
+            CombinedCodecs.ATTRIBUTE_MODIFIER.fieldOf("modifier").forGetter(ModifyManaPower::getModifiers)
     ).apply(i, ModifyManaPower::new));
 
     private final Holder<Attribute> attribute;
