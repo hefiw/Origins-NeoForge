@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 public record Origin(List<Holder<Power>> powers, Optional<ItemStack> icon, boolean unchoosable, int order,
-                     Impact impact, List<Upgrade> upgrades, Optional<ManaSettings> mana) {
+                     Impact impact, List<Upgrade> upgrades, Optional<ManaSettings> mana, OriginTags tags) {
     public static final Codec<Origin> DIRECT_CODEC = RecordCodecBuilder.create(i -> i.group(
             Power.CODEC.listOf().optionalFieldOf("powers", List.of()).forGetter(Origin::powers),
             ItemStack.CODEC.optionalFieldOf("icon").forGetter(Origin::icon),
@@ -27,14 +27,15 @@ public record Origin(List<Holder<Power>> powers, Optional<ItemStack> icon, boole
             Codec.INT.optionalFieldOf("order", Integer.MAX_VALUE).forGetter(Origin::order),
             Impact.CODEC.optionalFieldOf("impact", Impact.NONE).forGetter(Origin::impact),
             Upgrade.CODEC.listOf().optionalFieldOf("upgrades", List.of()).forGetter(Origin::upgrades),
-            ManaSettings.CODEC.optionalFieldOf("mana").forGetter(Origin::mana)
+            ManaSettings.CODEC.optionalFieldOf("mana").forGetter(Origin::mana),
+            OriginTags.CODEC.optionalFieldOf("tags", OriginTags.EMPTY).forGetter(Origin::tags)
     ).apply(i, Origin::new));
     public static final Codec<Holder<Origin>> CODEC = RegistryFixedCodec.create(OriginRegistries.ORIGIN_KEY);
     public static final StreamCodec<RegistryFriendlyByteBuf, Holder<Origin>> STREAM_CODEC = ByteBufCodecs.holderRegistry(OriginRegistries.ORIGIN_KEY);
     public static final Origin EMPTY = special(null, Impact.NONE, 0);
 
     public static Origin special(@Nullable ItemStack icon, Impact impact, int order) {
-        return new Origin(List.of(), Optional.ofNullable(icon), true, order, impact, List.of(), Optional.empty());
+        return new Origin(List.of(), Optional.ofNullable(icon), true, order, impact, List.of(), Optional.empty(), OriginTags.EMPTY);
     }
 
     public boolean choosable() {
@@ -67,5 +68,9 @@ public record Origin(List<Holder<Power>> powers, Optional<ItemStack> icon, boole
 
     public ManaSettings getManaSettings() {
         return mana.orElse(ManaSettings.DEFAULT);
+    }
+
+    public OriginTags getTags() {
+        return tags;
     }
 }

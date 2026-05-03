@@ -4,6 +4,7 @@ import com.iafenvoy.origins.data.layer.Layer;
 import com.iafenvoy.origins.data.layer.LayerRegistries;
 import com.iafenvoy.origins.data.origin.ManaSettings;
 import com.iafenvoy.origins.data.origin.Origin;
+import com.iafenvoy.origins.data.origin.OriginTags;
 import com.iafenvoy.origins.data.power.Power;
 import com.iafenvoy.origins.data.power.PowerRegistries;
 import com.iafenvoy.origins.data.power.Prioritized;
@@ -151,6 +152,7 @@ public final class OriginDataHolder {
         ResourceLocation id = RLHelper.id(origin);
         origin.value().powers().forEach(x -> this.grantPower(id, x));
         applyManaSettings(origin);
+        applyOriginTags(origin);
     }
 
     public void clearOrigin(@NotNull Holder<Layer> layer) {
@@ -258,13 +260,25 @@ public final class OriginDataHolder {
         if (entity instanceof ServerPlayer player) {
             var magicData = io.redspace.ironsspellbooks.api.magic.MagicData.getPlayerMagicData(player);
 
-            // Устанавливаем максимум и регенерацию
-            //magicData.setMaxMana((float) settings.maxMana());
-            // magicData.setManaRegen((float) settings.regen()); // если метод существует
-            // Или через атрибуты:
             player.getAttribute(io.redspace.ironsspellbooks.api.registry.AttributeRegistry.MAX_MANA).setBaseValue(settings.maxMana());
         }
     }
+
+    private void applyOriginTags(Holder<Origin> originHolder) {
+    OriginTags originTags = originHolder.value().getTags();
+
+    if (originTags.tags().isEmpty()) return;
+
+    if (entity instanceof ServerPlayer player) {
+        for (String tag : originTags.tags()) {
+            player.addTag(tag);           // Добавляем тег
+        }
+        player.sendSystemMessage(
+            Component.literal("§7Получены теги: " + originTags.tags()),
+            false
+        );
+    }
+}
 
     @ApiStatus.Internal
     @SubscribeEvent
