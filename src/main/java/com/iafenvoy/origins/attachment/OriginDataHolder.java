@@ -2,6 +2,7 @@ package com.iafenvoy.origins.attachment;
 
 import com.iafenvoy.origins.data.layer.Layer;
 import com.iafenvoy.origins.data.layer.LayerRegistries;
+import com.iafenvoy.origins.data.origin.ManaSettings;
 import com.iafenvoy.origins.data.origin.Origin;
 import com.iafenvoy.origins.data.power.Power;
 import com.iafenvoy.origins.data.power.PowerRegistries;
@@ -18,6 +19,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -148,6 +150,7 @@ public final class OriginDataHolder {
         this.data.getOrigins().put(layer, origin);
         ResourceLocation id = RLHelper.id(origin);
         origin.value().powers().forEach(x -> this.grantPower(id, x));
+        applyManaSettings(origin);
     }
 
     public void clearOrigin(@NotNull Holder<Layer> layer) {
@@ -245,6 +248,22 @@ public final class OriginDataHolder {
         //Check components and update
         if (this.data.getComponents().values().stream().flatMap(x -> x.values().stream()).map(PowerComponent::isDirty).reduce(false, (p, c) -> p | c))
             this.sync();
+    }
+
+    private void applyManaSettings(Holder<Origin> originHolder) {
+        ManaSettings settings = originHolder.value().getManaSettings();
+        if (settings == ManaSettings.DEFAULT) return;
+
+        // Iron's Spellbooks интеграция
+        if (entity instanceof ServerPlayer player) {
+            var magicData = io.redspace.ironsspellbooks.api.magic.MagicData.getPlayerMagicData(player);
+
+            // Устанавливаем максимум и регенерацию
+            //magicData.setMaxMana((float) settings.maxMana());
+            // magicData.setManaRegen((float) settings.regen()); // если метод существует
+            // Или через атрибуты:
+            player.getAttribute(io.redspace.ironsspellbooks.api.registry.AttributeRegistry.MAX_MANA).setBaseValue(settings.maxMana());
+        }
     }
 
     @ApiStatus.Internal

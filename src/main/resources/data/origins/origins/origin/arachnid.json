@@ -1,4 +1,8 @@
 {
+  "mana": {
+    "max_mana": 250.0,
+    "regen": 2.5
+  },
   "powers": [
     "origins:primary_key",
     "origins:climbing",
