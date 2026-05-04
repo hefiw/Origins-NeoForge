@@ -5,6 +5,7 @@ import com.iafenvoy.origins.data.layer.LayerRegistries;
 import com.iafenvoy.origins.data.origin.ManaSettings;
 import com.iafenvoy.origins.data.origin.Origin;
 import com.iafenvoy.origins.data.origin.OriginTags;
+import com.iafenvoy.origins.data.origin.ScaleSettings;
 import com.iafenvoy.origins.data.power.Power;
 import com.iafenvoy.origins.data.power.PowerRegistries;
 import com.iafenvoy.origins.data.power.Prioritized;
@@ -22,12 +23,15 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import virtuoel.pehkui.api.ScaleData;
+import virtuoel.pehkui.api.ScaleTypes;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -152,6 +156,7 @@ public final class OriginDataHolder {
         ResourceLocation id = RLHelper.id(origin);
         origin.value().powers().forEach(x -> this.grantPower(id, x));
         applyManaSettings(origin);
+        applyScaleSettings(origin);
         applyOriginTags(origin);
     }
 
@@ -261,6 +266,25 @@ public final class OriginDataHolder {
             var magicData = io.redspace.ironsspellbooks.api.magic.MagicData.getPlayerMagicData(player);
 
             player.getAttribute(io.redspace.ironsspellbooks.api.registry.AttributeRegistry.MAX_MANA).setBaseValue(settings.maxMana());
+        }
+    }
+
+    private void applyScaleSettings(Holder<Origin> originHolder) {
+        ScaleSettings settings = originHolder.value().getScaleSettings();
+        if (settings == ScaleSettings.DEFAULT || settings.scale() == 1.0) {
+            return; // стандартный размер — ничего не делаем
+        }
+
+        if (entity instanceof Player player) {
+            ScaleData scaleData = ScaleTypes.BASE.getScaleData(player);
+
+            float targetScale = (float) settings.scale();
+
+            scaleData.setScale(targetScale);
+            scaleData.setTargetScale(targetScale);
+
+            // Дополнительно: делаем размер постоянным после респавна
+            scaleData.setPersistence(true);
         }
     }
 

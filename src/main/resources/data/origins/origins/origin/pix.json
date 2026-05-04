@@ -1,0 +1,20 @@
+{
+  "mana": {
+    "max_mana": 160.0,
+    "regen": 2.0
+  },
+  "scale": {
+    "scale": 0.4
+  },
+  "tags": {
+    "tags": ["pix", "caster"]
+  },
+  "powers": [
+    "origins:pix_fly"
+  ],
+  "icon": {
+    "id": "minecraft:grass"
+  },
+  "order": 1,
+  "impact": 1
+}

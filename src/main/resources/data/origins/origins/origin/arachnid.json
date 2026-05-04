@@ -3,9 +3,6 @@
     "max_mana": 250.0,
     "regen": 2.5
   },
-  "tags": {
-    "tags": ["tag1", "testTag"]
-  },
   "powers": [
     "origins:primary_key",
     "origins:climbing",
@@ -16,8 +13,7 @@
     "origins:master_of_webs/web_crafting",
     "origins:master_of_webs/webbing",
     "origins:carnivore",
-    "origins:fragile",
-    "origins:pix_fly"
+    "origins:fragile"
   ],
   "icon": {
     "id": "minecraft:cobweb"
