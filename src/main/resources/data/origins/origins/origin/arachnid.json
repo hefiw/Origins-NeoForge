@@ -16,7 +16,8 @@
     "origins:master_of_webs/web_crafting",
     "origins:master_of_webs/webbing",
     "origins:carnivore",
-    "origins:fragile"
+    "origins:fragile",
+    "origins:pix_fly"
   ],
   "icon": {
     "id": "minecraft:cobweb"

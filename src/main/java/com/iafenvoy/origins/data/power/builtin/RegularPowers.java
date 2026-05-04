@@ -65,4 +65,5 @@ public final class RegularPowers {
     public static final DeferredHolder<MapCodec<? extends Power>, MapCodec<WalkOnFluidPower>> WALK_ON_FLUID = REGISTRY.register("walk_on_fluid", () -> WalkOnFluidPower.CODEC);
     public static final DeferredHolder<MapCodec<? extends Power>, MapCodec<WaterBreathingPower>> WATER_BREATHING = REGISTRY.register("water_breathing", () -> WaterBreathingPower.CODEC);
     public static final DeferredHolder<MapCodec<? extends Power>, MapCodec<WaterVisionPower>> WATER_VISION = REGISTRY.register("water_vision", () -> WaterVisionPower.CODEC);
+    public static final DeferredHolder<MapCodec<? extends Power>, MapCodec<ManaFlightPower>> PIX_FLY = REGISTRY.register("pix_fly", () -> ManaFlightPower.CODEC);
 }

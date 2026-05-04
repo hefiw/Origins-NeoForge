@@ -1,0 +1,6 @@
+{
+  "type": "origins:pix_fly",
+  "mana_cost_per_tick": 10.0,
+  "name": "Магический Полёт",
+  "description": "Летайте за счёт маны из Iron's Spellbooks"
+}
