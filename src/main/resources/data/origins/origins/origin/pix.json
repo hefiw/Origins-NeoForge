@@ -13,7 +13,8 @@
     "origins:pix_fly",
     "origins:pix_hurts",
     "origins:pix_jump",
-    "origins:tailwind"
+    "origins:tailwind",
+    "origins:water_vulnerability"
   ],
   "icon": {
     "id": "minecraft:grass_block"

@@ -3,7 +3,7 @@
   "modifiers": [
     {
       "attribute": "minecraft:generic.jump_strength",
-      "value": 0.6,
+      "value": 0.5,
       "operation": "add_multiplied_base"
     }
   ]

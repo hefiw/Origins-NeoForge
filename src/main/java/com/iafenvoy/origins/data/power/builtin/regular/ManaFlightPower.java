@@ -73,7 +73,7 @@ public class ManaFlightPower extends Power {
                 magicData.setMana((float) (magicData.getMana() - costPerTick));
 
                 // Частицы
-                if (player.tickCount % 40 == 0) {
+                if (player.tickCount % 10 == 0) {
                     Vec3 pos = player.position();
                     ServerLevel level = (ServerLevel) player.level();
                     level.sendParticles(ParticleTypes.FIREWORK,
