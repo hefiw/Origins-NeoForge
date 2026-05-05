@@ -10,10 +10,13 @@
     "tags": ["pix", "caster"]
   },
   "powers": [
-    "origins:pix_fly"
+    "origins:pix_fly",
+    "origins:pix_hurts",
+    "origins:pix_jump",
+    "origins:tailwind"
   ],
   "icon": {
-    "id": "minecraft:grass"
+    "id": "minecraft:grass_block"
   },
   "order": 1,
   "impact": 1

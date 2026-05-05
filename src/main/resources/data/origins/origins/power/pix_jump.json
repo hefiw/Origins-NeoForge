@@ -2,8 +2,8 @@
   "type": "origins:attribute",
   "modifiers": [
     {
-      "attribute": "minecraft:generic.movement_speed",
-      "value": 0.5,
+      "attribute": "minecraft:generic.jump_strength",
+      "value": 0.6,
       "operation": "add_multiplied_base"
     }
   ]

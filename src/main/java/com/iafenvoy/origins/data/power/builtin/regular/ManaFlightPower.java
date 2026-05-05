@@ -69,11 +69,11 @@ public class ManaFlightPower extends Power {
             MagicData magicData = MagicData.getPlayerMagicData(player);
             double costPerTick = manaCostPerTick / 20.0;
 
-            if (magicData.getMana() >= costPerTick) {
+            if (magicData.getMana() >= manaCostPerTick*2) {
                 magicData.setMana((float) (magicData.getMana() - costPerTick));
 
                 // Частицы
-                if (player.tickCount % 4 == 0) {
+                if (player.tickCount % 40 == 0) {
                     Vec3 pos = player.position();
                     ServerLevel level = (ServerLevel) player.level();
                     level.sendParticles(ParticleTypes.FIREWORK,

@@ -52,16 +52,24 @@ public class CreativeFlightPower extends Power {
 
     @Override
     public void tick(@NotNull OriginDataHolder holder) {
+        System.out.println("-1");
         if (!(holder.getEntity() instanceof ServerPlayer player)) return;
+        if (player.tickCount % 20 == 0) return;
 
+        System.out.println("0");
+        System.out.println(player.tickCount);
+        System.out.println(player.getAbilities().flying);
+        System.out.println(!player.isCreative());
         if (player.getAbilities().flying && !player.isCreative()) {
             MagicData magicData = MagicData.getPlayerMagicData(player);
-            double costPerTick = manaCostPerSecond / 20.0;
+            System.out.println("1");
+            System.out.println(manaCostPerSecond);
+            //не работает, надо чтоб если маны меньше чем manaCostPerSecond*5 персонаж не мог летать
 
-            if (magicData.getMana() >= manaCostPerSecond*2) {
-                magicData.setMana((float) (magicData.getMana() - costPerTick));
+            if (magicData.getMana() >= manaCostPerSecond) {
+                magicData.setMana((float) (magicData.getMana() - manaCostPerSecond));
 
-                if (player.tickCount % 4 == 0) {
+                if (player.tickCount % 20 == 0) {
                     Vec3 pos = player.position();
                     ServerLevel level = (ServerLevel) player.level();
                     level.sendParticles(ParticleTypes.FIREWORK,
