@@ -66,4 +66,7 @@ public final class RegularPowers {
     public static final DeferredHolder<MapCodec<? extends Power>, MapCodec<WaterBreathingPower>> WATER_BREATHING = REGISTRY.register("water_breathing", () -> WaterBreathingPower.CODEC);
     public static final DeferredHolder<MapCodec<? extends Power>, MapCodec<WaterVisionPower>> WATER_VISION = REGISTRY.register("water_vision", () -> WaterVisionPower.CODEC);
     public static final DeferredHolder<MapCodec<? extends Power>, MapCodec<ManaFlightPower>> PIX_FLY = REGISTRY.register("pix_fly", () -> ManaFlightPower.CODEC);
+    public static final DeferredHolder<MapCodec<? extends Power>, MapCodec<StableAttributePower>> STABLE_ATTRIBUTE = REGISTRY.register("stable_attribute", () -> StableAttributePower.CODEC);
+    public static final DeferredHolder<MapCodec<? extends Power>, MapCodec<BecomeVampirePower>> BECOME_VAMPIRE = REGISTRY.register("vampire_origin", () -> BecomeVampirePower.CODEC);
+    public static final DeferredHolder<MapCodec<? extends Power>, MapCodec<VampireStartingBiome>> BIOME_VAMPIRE = REGISTRY.register("vampire_biome_spawn", () -> VampireStartingBiome.CODEC);
 }

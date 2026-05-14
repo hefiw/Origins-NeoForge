@@ -1,5 +1,6 @@
 package com.iafenvoy.origins.attachment;
 
+import com.iafenvoy.origins.data.VampireSpawnData;
 import com.iafenvoy.origins.data.layer.Layer;
 import com.iafenvoy.origins.data.layer.LayerRegistries;
 import com.iafenvoy.origins.data.origin.ManaSettings;
@@ -9,6 +10,9 @@ import com.iafenvoy.origins.data.origin.ScaleSettings;
 import com.iafenvoy.origins.data.power.Power;
 import com.iafenvoy.origins.data.power.PowerRegistries;
 import com.iafenvoy.origins.data.power.Prioritized;
+import com.iafenvoy.origins.data.power.builtin.regular.AttributePower;
+import com.iafenvoy.origins.data.power.builtin.regular.ConditionedAttributePower;
+import com.iafenvoy.origins.data.power.builtin.regular.VampireStartingBiome;
 import com.iafenvoy.origins.data.power.component.ComponentCollector;
 import com.iafenvoy.origins.data.power.component.ComponentHolderProvider;
 import com.iafenvoy.origins.data.power.component.PowerComponent;
@@ -16,6 +20,7 @@ import com.iafenvoy.origins.registry.OriginsAttachments;
 import com.iafenvoy.origins.util.RLHelper;
 import com.iafenvoy.origins.util.RandomHelper;
 import com.mojang.serialization.MapCodec;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
@@ -26,6 +31,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.ApiStatus;
@@ -36,6 +42,9 @@ import virtuoel.pehkui.api.ScaleTypes;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static com.iafenvoy.origins.data.power.builtin.regular.VampireStartingBiome.findNearestCave;
+import static com.iafenvoy.origins.data.power.builtin.regular.VampireStartingBiome.teleportToVampireSpawn;
 
 @EventBusSubscriber
 public final class OriginDataHolder {
@@ -158,6 +167,7 @@ public final class OriginDataHolder {
         applyManaSettings(origin);
         applyScaleSettings(origin);
         applyOriginTags(origin);
+        checkVampireFirstSpawn(origin);
     }
 
     public void clearOrigin(@NotNull Holder<Layer> layer) {
@@ -289,24 +299,39 @@ public final class OriginDataHolder {
     }
 
     private void applyOriginTags(Holder<Origin> originHolder) {
-    OriginTags originTags = originHolder.value().getTags();
+        OriginTags originTags = originHolder.value().getTags();
 
-    if (originTags.tags().isEmpty()) return;
+        if (originTags.tags().isEmpty()) return;
 
-    if (entity instanceof ServerPlayer player) {
-        for (String tag : originTags.tags()) {
-            player.addTag(tag);           // Добавляем тег
+        if (entity instanceof ServerPlayer player) {
+            for (String tag : originTags.tags()) {
+                player.addTag(tag);           // Добавляем тег
+            }
+            player.sendSystemMessage(
+                Component.literal("§7Получены теги: " + originTags.tags()),
+                false
+            );
         }
-        player.sendSystemMessage(
-            Component.literal("§7Получены теги: " + originTags.tags()),
-            false
-        );
     }
-}
+
+    private void checkVampireFirstSpawn(Holder<Origin> origin) {
+        if (!(entity instanceof ServerPlayer player)) return;
+
+        // Проверяем, есть ли у origin'а power VampireStartingBiome
+        if (origin.value().powers().stream().anyMatch(p -> p.value() instanceof VampireStartingBiome)) {
+
+            // Проверяем, первый ли это спавн с этой расой
+            if (!player.getPersistentData().getBoolean("vampire_cave_spawned")) {
+                teleportToVampireSpawn(player);
+                player.getPersistentData().putBoolean("vampire_cave_spawned", true);
+            }
+        }
+    }
 
     @ApiStatus.Internal
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
-        OriginDataHolder.get(event.getEntity()).tick();
+        OriginDataHolder holder = OriginDataHolder.get(event.getEntity());
+        holder.tick();
     }
 }

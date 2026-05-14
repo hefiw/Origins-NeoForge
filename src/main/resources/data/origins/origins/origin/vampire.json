@@ -1,0 +1,21 @@
+{
+  "mana": {
+    "max_mana": 100.0,
+    "regen": 1.5
+  },
+  "scale": {
+    "scale": 1
+  },
+  "tags": {
+    "tags": ["vampire", "caster"]
+  },
+  "powers": [
+    "origins:vampire_origin",
+    "origins:vampire_biome_spawn"
+  ],
+  "icon": {
+    "id": "minecraft:rotten_flesh"
+  },
+  "order": 1,
+  "impact": 1
+}

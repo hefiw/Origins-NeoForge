@@ -12,8 +12,8 @@
   "powers": [
     "origins:pix_fly",
     "origins:pix_hurts",
-    "origins:pix_jump",
     "origins:tailwind",
+    "origins:pix_jump",
     "origins:water_vulnerability"
   ],
   "icon": {

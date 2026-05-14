@@ -3,7 +3,7 @@
   "modifiers": [
     {
       "attribute": "minecraft:generic.movement_speed",
-      "value": 1.0,
+      "value": 1.5,
       "operation": "add_multiplied_base"
     }
   ]

@@ -50,4 +50,24 @@ public class AttributePower extends Power implements AttributePowerHelper {
     public void revoke(@NotNull OriginDataHolder holder) {
         this.modify(holder, false);
     }
+
+    @Override
+    public void active(@NotNull OriginDataHolder holder) {
+        this.modify(holder, true);
+    }
+
+    @Override
+    public void inactive(@NotNull OriginDataHolder holder) {
+        this.modify(holder, false);
+    }
+
+    @Override
+    public void tick(@NotNull OriginDataHolder holder) {
+        super.tick(holder);
+
+        // Применяем раз в 40 тиков (~2 секунды) — достаточно и не нагружает
+        if (holder.getEntity().tickCount % 20 == 0) {
+            this.modify(holder, true);
+        }
+    }
 }
