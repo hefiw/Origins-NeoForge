@@ -276,6 +276,8 @@ public final class OriginDataHolder {
             var magicData = io.redspace.ironsspellbooks.api.magic.MagicData.getPlayerMagicData(player);
 
             player.getAttribute(io.redspace.ironsspellbooks.api.registry.AttributeRegistry.MAX_MANA).setBaseValue(settings.maxMana());
+            player.getAttribute(io.redspace.ironsspellbooks.api.registry.AttributeRegistry.MANA_REGEN).setBaseValue(settings.regen());
+            magicData.setMana((float) settings.maxMana());
         }
     }
 
@@ -307,10 +309,6 @@ public final class OriginDataHolder {
             for (String tag : originTags.tags()) {
                 player.addTag(tag);           // Добавляем тег
             }
-            player.sendSystemMessage(
-                Component.literal("§7Получены теги: " + originTags.tags()),
-                false
-            );
         }
     }
 

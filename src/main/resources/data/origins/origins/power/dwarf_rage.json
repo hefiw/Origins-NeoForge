@@ -1,8 +1,8 @@
 {
   "type": "origins:dwarf_rage",
-  "mana_cost_per_second": 2.0,
-  "size": 1.25,
-  "rage_hp": 10.0,
+  "mana_cost_per_second": 1.0,
+  "size": 1.1,
+  "rage_hp": 8.0,
   "name": "Зов предков",
   "description": "Нажми Z для активации режима берсерка",
   "key": {
