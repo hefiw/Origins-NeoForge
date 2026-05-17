@@ -10,11 +10,13 @@ import com.iafenvoy.origins.data.power.builtin.ActionPowers;
 import com.iafenvoy.origins.data.power.builtin.ModifyPowers;
 import com.iafenvoy.origins.data.power.builtin.PreventPowers;
 import com.iafenvoy.origins.data.power.builtin.RegularPowers;
+import com.iafenvoy.origins.data.power.builtin.regular.DwarfRagePower;
 import com.iafenvoy.origins.data.power.component.BuiltinComponents;
 import com.iafenvoy.origins.registry.*;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import org.slf4j.Logger;
 
 @Mod(Origins.MOD_ID)

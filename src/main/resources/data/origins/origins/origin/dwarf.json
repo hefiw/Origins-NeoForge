@@ -1,0 +1,23 @@
+{
+  "mana": {
+    "max_mana": 60.0,
+    "regen": 0
+  },
+  "scale": {
+    "scale": 0.9
+  },
+  "tags": {
+    "tags": ["dwarf", "strength"]
+  },
+  "powers": [
+    "origins:unvampire",
+    "origins:dwarf_power",
+    "origins:dwarf_hurts",
+    "origins:dwarf_rage"
+  ],
+  "icon": {
+    "id": "minecraft:rotten_flesh"
+  },
+  "order": 1,
+  "impact": 1
+}

@@ -11,7 +11,8 @@
   },
   "powers": [
     "origins:vampire_origin",
-    "origins:vampire_biome_spawn"
+    "origins:vampire_biome_spawn",
+    "origins:vampire_speed"
   ],
   "icon": {
     "id": "minecraft:rotten_flesh"

@@ -69,4 +69,6 @@ public final class RegularPowers {
     public static final DeferredHolder<MapCodec<? extends Power>, MapCodec<StableAttributePower>> STABLE_ATTRIBUTE = REGISTRY.register("stable_attribute", () -> StableAttributePower.CODEC);
     public static final DeferredHolder<MapCodec<? extends Power>, MapCodec<BecomeVampirePower>> BECOME_VAMPIRE = REGISTRY.register("vampire_origin", () -> BecomeVampirePower.CODEC);
     public static final DeferredHolder<MapCodec<? extends Power>, MapCodec<VampireStartingBiome>> BIOME_VAMPIRE = REGISTRY.register("vampire_biome_spawn", () -> VampireStartingBiome.CODEC);
+    public static final DeferredHolder<MapCodec<? extends Power>, MapCodec<VampireIncompatibilityPower>> VAMPIRE_INCOMPATIBILITY = REGISTRY.register("vampire_incompatibility", () -> VampireIncompatibilityPower.CODEC);
+    public static final DeferredHolder<MapCodec<? extends Power>, MapCodec<DwarfRagePower>> DWARF_RAGE = REGISTRY.register("dwarf_rage", () -> DwarfRagePower.CODEC);
 }

@@ -1,0 +1,19 @@
+{
+  "post": "minecraft:blur",
+  "uniforms": [
+    {
+      "name": "ColorModulate",
+      "type": "float",
+      "values": [ 1.8, 0.4, 0.4, 1.0 ]
+    }
+  ],
+  "passes": [
+    {
+      "name": "red_rage",
+      "intarget": "minecraft:main",
+      "outtarget": "minecraft:main",
+      "auxtargets": [],
+      "program": "origins:red_tint"
+    }
+  ]
+}

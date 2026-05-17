@@ -14,7 +14,8 @@
     "origins:pix_hurts",
     "origins:tailwind",
     "origins:pix_jump",
-    "origins:water_vulnerability"
+    "origins:water_vulnerability",
+    "origins:unvampire"
   ],
   "icon": {
     "id": "minecraft:grass_block"
