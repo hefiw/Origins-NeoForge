@@ -43,7 +43,8 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer<LivingEnt
     @WrapWithCondition(method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/layers/RenderLayer;render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/Entity;FFFFFF)V"))
     private <T extends Entity> boolean preventFeatureRendering(RenderLayer<T, ?> instance, PoseStack poseStack, MultiBufferSource buffer, int packedLight, T living, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         OriginDataHolder holder = OriginDataHolder.get(living);
-        return holder.streamActivePowers(InvisibilityPower.class).anyMatch(InvisibilityPower::shouldRenderArmor);
+        boolean hideFeatures = holder.streamActivePowers(InvisibilityPower.class).anyMatch(power -> !power.shouldRenderArmor());
+        return !hideFeatures;
     }
 
     @Inject(method = "isShaking", at = @At("HEAD"), cancellable = true)
