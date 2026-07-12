@@ -6,6 +6,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
+import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,21 +16,13 @@ import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("deprecation")
 public class ManaFlightPower extends Power {
-
     public static final MapCodec<ManaFlightPower> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
-            BaseSettings.CODEC.forGetter(Power::getSettings),
-            Codec.DOUBLE.optionalFieldOf("mana_cost_per_tick", 5.0).forGetter(p -> p.manaCostPerTick)
+            BaseSettings.CODEC.forGetter(Power::getSettings)
     ).apply(i, ManaFlightPower::new));
 
-    private final double manaCostPerTick;
 
-    public ManaFlightPower(BaseSettings settings, double manaCostPerTick) {
+    public ManaFlightPower(BaseSettings settings) {
         super(settings);
-        this.manaCostPerTick = manaCostPerTick;
-    }
-
-    public double getManaCostPerTick() {
-        return manaCostPerTick;
     }
 
     @Override
@@ -67,9 +60,10 @@ public class ManaFlightPower extends Power {
 
         if (player.getAbilities().flying && !player.isCreative()) {
             MagicData magicData = MagicData.getPlayerMagicData(player);
-            double costPerTick = manaCostPerTick / 20.0;
+            float maxMana = (float) player.getAttributeValue(AttributeRegistry.MAX_MANA);
+            double costPerTick = maxMana * 0.1 / 20.0;
 
-            if (magicData.getMana() >= manaCostPerTick*2) {
+            if (magicData.getMana() >= costPerTick*20*2) {
                 magicData.setMana((float) (magicData.getMana() - costPerTick));
 
                 // Частицы
