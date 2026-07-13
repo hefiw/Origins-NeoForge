@@ -61,7 +61,7 @@ public class ManaFlightPower extends Power {
         if (player.getAbilities().flying && !player.isCreative()) {
             MagicData magicData = MagicData.getPlayerMagicData(player);
             float maxMana = (float) player.getAttributeValue(AttributeRegistry.MAX_MANA);
-            double costPerTick = maxMana * 0.1 / 20.0;
+            double costPerTick = maxMana * 0.08 / 20.0;
 
             if (magicData.getMana() >= costPerTick*20*2) {
                 magicData.setMana((float) (magicData.getMana() - costPerTick));

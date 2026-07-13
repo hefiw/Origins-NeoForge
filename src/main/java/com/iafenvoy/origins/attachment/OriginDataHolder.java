@@ -277,7 +277,7 @@ public final class OriginDataHolder {
 
             player.getAttribute(io.redspace.ironsspellbooks.api.registry.AttributeRegistry.MAX_MANA).setBaseValue(settings.maxMana());
             player.getAttribute(io.redspace.ironsspellbooks.api.registry.AttributeRegistry.MANA_REGEN).setBaseValue(settings.regen());
-            magicData.setMana((float) settings.maxMana());
+            magicData.setMana((float) settings.maxMana()-1);
         }
     }
 
@@ -315,10 +315,7 @@ public final class OriginDataHolder {
     private void checkVampireFirstSpawn(Holder<Origin> origin) {
         if (!(entity instanceof ServerPlayer player)) return;
 
-        // Проверяем, есть ли у origin'а power VampireStartingBiome
         if (origin.value().powers().stream().anyMatch(p -> p.value() instanceof VampireStartingBiome)) {
-
-            // Проверяем, первый ли это спавн с этой расой
             if (!player.getPersistentData().getBoolean("vampire_cave_spawned")) {
                 teleportToVampireSpawn(player);
                 player.getPersistentData().putBoolean("vampire_cave_spawned", true);
